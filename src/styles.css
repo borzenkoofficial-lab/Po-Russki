@@ -607,3 +607,12 @@ h2 span { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
   .case-modal-copy h2{font-size:12vw}
   .case-stats div{grid-template-columns:75px 1fr}
 }
+
+
+.topbar{transition:height .35s ease,background .35s ease,box-shadow .35s ease}
+.topbar-scrolled{height:64px;background:rgba(243,241,237,.9);box-shadow:0 12px 34px rgba(17,17,17,.08)}
+.topbar-scrolled .brand{transform:scale(.92);transform-origin:left center}
+.case-modal-inner{animation:casePanelIn .55s cubic-bezier(.16,.8,.2,1)}
+@keyframes casePanelIn{from{transform:translateY(24px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.case-modal-copy .button{margin-top:4px}
+@media(max-width:900px){.topbar-scrolled{height:62px}.topbar-scrolled .nav{top:62px}}
