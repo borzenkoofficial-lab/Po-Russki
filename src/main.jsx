@@ -12,6 +12,35 @@ import {
 import "./styles.css";
 import Scene3D from "./Scene3D";
 
+class SafeScene extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { failed: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  componentDidCatch(error) {
+    console.error("Po-Russki 3D scene failed:", error);
+  }
+
+  render() {
+    if (this.state.failed) {
+      return (
+        <div className="scene3d-fallback safe-fallback" aria-hidden="true">
+          <div className="fallback-plane" />
+          <div className="fallback-wall" />
+          <div className="fallback-cut" />
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 const services = [
   {
     id: "01",
@@ -166,7 +195,7 @@ function App() {
             <div className="blueprint-ring ring-two" />
             <div className="stage-label label-a">01 / DEMOLITION</div>
             <div className="stage-label label-b">MATERIAL / CONCRETE</div>
-            <Scene3D />
+            <SafeScene><Scene3D /></SafeScene>
             <div className="dust dust-one" />
             <div className="dust dust-two" />
             <div className="stage-center-label">
