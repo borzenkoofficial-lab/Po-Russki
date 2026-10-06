@@ -12,20 +12,22 @@ export default function Scene3D() {
     if (!mount) return;
 
     let renderer;
+    let failed = false;
+
     try {
       renderer = new THREE.WebGLRenderer({
         antialias: true,
         alpha: true,
         powerPreference: "high-performance",
       });
-    } catch {
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+      renderer.setSize(mount.clientWidth, mount.clientHeight, false);
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.setClearColor(0x000000, 0);
+    } catch (error) {
+      mount.dataset.webglFailed = "true";
       return undefined;
     }
-
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
-    renderer.setSize(mount.clientWidth, mount.clientHeight, false);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.setClearColor(0x000000, 0);
 
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x191918, 0.045);
@@ -162,11 +164,14 @@ export default function Scene3D() {
     mount.addEventListener("pointermove", onPointerMove);
     mount.addEventListener("pointerleave", onPointerLeave);
 
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const media = typeof window.matchMedia === "function"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
+      : { matches: false };
     let frame = 0;
     let last = performance.now();
 
     const animate = (now) => {
+      if (failed) return;
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
 
@@ -220,7 +225,15 @@ export default function Scene3D() {
       }
 
       camera.lookAt(0, 0.35 + currentScroll.value * 0.35, 0);
-      renderer.render(scene, camera);
+      try {
+        renderer.render(scene, camera);
+      } catch (error) {
+        failed = true;
+        mount.dataset.webglFailed = "true";
+        renderer?.dispose();
+        renderer?.domElement.remove();
+        return;
+      }
       frame = requestAnimationFrame(animate);
     };
 
@@ -265,5 +278,13 @@ export default function Scene3D() {
     };
   }, []);
 
-  return <div className="scene3d" ref={mountRef} aria-hidden="true" />;
+  return (
+    <div className="scene3d" ref={mountRef} aria-hidden="true">
+      <div className="scene3d-fallback">
+        <div className="fallback-plane" />
+        <div className="fallback-wall" />
+        <div className="fallback-cut" />
+      </div>
+    </div>
+  );
 }
