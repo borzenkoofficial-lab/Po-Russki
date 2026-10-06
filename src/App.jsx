@@ -1,9 +1,7 @@
-import React, { Component, Suspense, lazy, useEffect, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, Menu, X } from "lucide-react";
 import "./styles.css";
-
-const Scene3D = lazy(() => import("./Scene3D.jsx"));
 
 const services = [
   { slug:"demontazh", number:"01", title:"Демонтаж", short:"Разбираем пространство до основания.", items:["Перегородки","Стяжка","Напольные покрытия","Потолки","Плитка","Двери","Помещения","Конструкции"] },
@@ -95,11 +93,8 @@ function PageFrame({ eyebrow, title, text, children }) {
 }
 
 function HomePage() {
-  const [ready,setReady] = useState(false);
-  useEffect(()=>{ const t=window.setTimeout(()=>setReady(true),900); return ()=>window.clearTimeout(t); },[]);
   return <main className="home-page">
-    {!ready && <div className="site-preloader"><div className="preloader-top"><span>ПО-РУССКИ</span><span>МОСКВА / МО</span></div><div className="preloader-center"><div className="preloader-line"/><strong>01</strong><span>ЗАГРУЖАЕМ ПРОСТРАНСТВО</span></div><div className="preloader-bottom"><span>DEMOLITION / PREPARATION / FINISH / ACCESS FLOOR</span><span>2026</span></div></div>}
-    <section className="hero-page">
+    <section className="hero-page hero-page-static">
       <div className="hero-page-copy">
         <p className="eyebrow"><span/> МОСКВА / МО · РАБОТАЕМ ПО ОБЪЕКТУ</p>
         <h1>ДЕЛАЕМ<br/><em>ПО-РУССКИ.</em></h1>
@@ -107,9 +102,10 @@ function HomePage() {
         <p className="hero-description">Демонтаж, подготовка, отделка и фальшпол. Разбираемся в задаче и приводим объект к следующему этапу.</p>
         <div className="hero-actions"><LinkButton to="/kontakty" className="button button-dark">Обсудить объект <ArrowUpRight size={18}/></LinkButton><LinkButton to="/uslugi" className="text-button">Все услуги <ArrowDownRight size={18}/></LinkButton></div>
       </div>
-      <div className="hero-stage">
-        <div className="stage-label label-a">01 / DEMOLITION</div><div className="stage-label label-b">MATERIAL / CONCRETE</div>
-        <SceneBoundary><Suspense fallback={<div className="scene3d-fallback safe-fallback" aria-hidden="true"><div className="fallback-plane"/><div className="fallback-wall"/><div className="fallback-cut"/></div>}><Scene3D/></Suspense></SceneBoundary>
+      <div className="hero-stage hero-stage-fallback">
+        <div className="stage-label label-a">01 / DEMOLITION</div>
+        <div className="stage-label label-b">MATERIAL / CONCRETE</div>
+        <div className="static-architecture"><div className="sa-base"/><div className="sa-wall sa-left"/><div className="sa-wall sa-right"/><div className="sa-floor"/><div className="sa-ring"/></div>
         <div className="stage-center-label"><span>РАБОТАЕМ</span><strong>СУТЬ</strong><small>пространство<br/>до следующего этапа</small></div>
         <div className="stage-bottom-line"><span>ПО-РУССКИ / 2026</span><span>SCROLL TO ENTER</span></div>
       </div>
@@ -135,7 +131,6 @@ function HomePage() {
     <section className="home-cta section-pad"><div><div className="section-index">05 / ОБЪЕКТ</div><h2>Есть работа?<br/><span>Показывайте.</span></h2></div><div><p className="lead">Фото объекта, площадь и короткая задача — этого достаточно, чтобы начать разговор.</p><LinkButton to="/kontakty" className="button button-light">Оставить задачу <ArrowUpRight size={18}/></LinkButton></div></section>
   </main>;
 }
-
 function ServicesPage() {
   return <PageFrame eyebrow="01 / УСЛУГИ" title={<>Работы,<br/><span>которые делаем.</span></>} text="Не абстрактный ремонт. Конкретный перечень работ под объект.">
     <section className="directory-grid section-pad">{services.map(s=><article className="directory-card" key={s.slug}><div className="directory-number">{s.number}</div><div><h2>{s.title}</h2><p>{s.short}</p><div className="directory-items">{s.items.map(item=><span key={item}><i/>{item}</span>)}</div></div><LinkButton to={"/uslugi/"+s.slug} className="directory-link">Открыть направление <ArrowUpRight size={17}/></LinkButton></article>)}</section>
