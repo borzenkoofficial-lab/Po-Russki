@@ -42,6 +42,9 @@ class AppBoundary extends Component {
   state = { failed:false, error:null };
   static getDerivedStateFromError(error) { return { failed:true, error }; }
   componentDidCatch(error) { console.error("Po-Russki app runtime failed:", error); }
+  componentDidMount() {
+    if (!this.state.failed) document.getElementById("boot-fallback")?.remove();
+  }
   render() {
     if (this.state.failed) {
       return <div className="runtime-fallback"><div><span>PO-RUSSKI / RUNTIME</span><h1>СТРАНИЦА<br/><em>ЗАГРУЗИЛАСЬ НЕПОЛНОСТЬЮ.</em></h1><p>Основной интерфейс защищён от ошибки. Обновите страницу.</p><button type="button" className="button button-dark" onClick={()=>window.location.reload()}>Обновить страницу</button></div></div>;
