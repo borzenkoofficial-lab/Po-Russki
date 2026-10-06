@@ -29,8 +29,8 @@ function navigate(path) {
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
 
-function LinkButton({ to, children, className="" }) {
-  return <button className={className} type="button" onClick={() => navigate(to)}>{children}</button>;
+function LinkButton({ to, children, className="", onClick }) {
+  return <button className={className} type="button" onClick={() => { onClick?.(); navigate(to); }}>{children}</button>;
 }
 
 function SafeScene({ children }) {
@@ -52,7 +52,7 @@ function Header({ path }) {
   return <header className="topbar site-nav">
     <LinkButton to="/" className="brand"><span>ПО</span><span>РУССКИ</span></LinkButton>
     <nav className={open ? "nav nav-open" : "nav"}>
-      {links.map(([to,label]) => <LinkButton key={to} to={to} className={path===to || (to==="/uslugi" && path.startsWith("/uslugi/")) ? "nav-active" : ""}>{label}</LinkButton>)}
+      {links.map(([to,label]) => <LinkButton key={to} to={to} onClick={()=>setOpen(false)} className={path===to || (to==="/uslugi" && path.startsWith("/uslugi/")) ? "nav-active" : ""}>{label}</LinkButton>)}
     </nav>
     <button className="menu-button" type="button" onClick={()=>setOpen(v=>!v)} aria-label="Меню">{open ? <X size={21}/> : <Menu size={21}/>}</button>
     <LinkButton to="/kontakty" className="top-action">Обсудить объект <ArrowUpRight size={16}/></LinkButton>
@@ -165,7 +165,7 @@ function App() {
     };
     return ()=>{window.removeEventListener("popstate",onPop); window.removeEventListener("click",onClick);};
   },[]);
-  useEffect(()=>window.scrollTo({top:0,behavior:"instant"}),[path]);
+  useEffect(()=>{ window.scrollTo(0,0); },[path]);
 
   let page;
   if(path==="/") page=<HomePage/>;
@@ -179,7 +179,7 @@ function App() {
     page=service?<ServicePage service={service}/>:<ServicesPage/>;
   } else page=<HomePage/>;
 
-  return <div className="site-shell"><Header path={path}/>{page}<div className="floating-call" onClick={()=>navigate("/kontakty")}><span>+</span><strong>ОБЪЕКТ</strong></div><Footer/></div>;
+  return <div className="site-shell"><Header path={path}/><div key={path} className="page-transition">{page}</div><div className="floating-call" onClick={()=>navigate("/kontakty")}><span>+</span><strong>ОБЪЕКТ</strong></div><Footer/></div>;
 }
 
 createRoot(document.getElementById("root")).render(<App/>);
