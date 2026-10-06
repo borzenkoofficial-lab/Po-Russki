@@ -10,6 +10,7 @@ import {
   X,
 } from "lucide-react";
 import "./styles.css";
+import Scene3D from "./Scene3D";
 
 const services = [
   {
@@ -142,14 +143,7 @@ function App() {
             <div className="blueprint-ring ring-two" />
             <div className="stage-label label-a">01 / DEMOLITION</div>
             <div className="stage-label label-b">MATERIAL / CONCRETE</div>
-            <div className="concrete-object" aria-hidden="true">
-              <div className="block block-a" />
-              <div className="block block-b" />
-              <div className="block block-c" />
-              <div className="cutout" />
-              <div className="edge-light edge-one" />
-              <div className="edge-light edge-two" />
-            </div>
+            <Scene3D />
             <div className="dust dust-one" />
             <div className="dust dust-two" />
             <div className="stage-center-label">
