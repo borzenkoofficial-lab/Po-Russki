@@ -38,6 +38,18 @@ function SafeScene({ children }) {
   return children;
 }
 
+class AppBoundary extends Component {
+  state = { failed:false, error:null };
+  static getDerivedStateFromError(error) { return { failed:true, error }; }
+  componentDidCatch(error) { console.error("Po-Russki app runtime failed:", error); }
+  render() {
+    if (this.state.failed) {
+      return <div className="runtime-fallback"><div><span>PO-RUSSKI / RUNTIME</span><h1>СТРАНИЦА<br/><em>ЗАГРУЗИЛАСЬ НЕПОЛНОСТЬЮ.</em></h1><p>Основной интерфейс защищён от ошибки. Обновите страницу.</p><button type="button" className="button button-dark" onClick={()=>window.location.reload()}>Обновить страницу</button></div></div>;
+    }
+    return this.props.children;
+  }
+}
+
 class SceneBoundary extends Component {
   state = { failed:false };
   static getDerivedStateFromError() { return { failed:true }; }
@@ -183,4 +195,4 @@ function App() {
   return <div className="site-shell"><Header path={path}/><div key={path} className="page-transition">{page}</div><div className="floating-call" onClick={()=>navigate("/kontakty")}><span>+</span><strong>ОБЪЕКТ</strong></div><Footer/></div>;
 }
 
-createRoot(document.getElementById("root")).render(<App/>);
+createRoot(document.getElementById("root")).render(<AppBoundary><App/></AppBoundary>);
