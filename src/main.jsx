@@ -104,6 +104,11 @@ function App() {
       </header>
 
       <main id="top">
+        <div className="scroll-meter" aria-hidden="true">
+          <span />
+          <strong>SCROLL</strong>
+        </div>
+
         <section className="hero">
           <div className="hero-copy reveal">
             <p className="eyebrow"><span /> МОСКВА / МО · РАБОТАЕМ ПО ОБЪЕКТУ</p>
@@ -181,6 +186,11 @@ function App() {
               <p>Сайт будет развиваться вместе с работой: сначала заявки и портфолио, дальше — расчёты, объекты и собственная система управления.</p>
             </div>
           </div>
+        </section>
+
+        <section className="service-marquee" aria-label="Работы">
+          <div className="service-marquee-line"><span>СТЕНЫ</span><span>ПЕРЕГОРОДКИ</span><span>ПОЛЫ</span><span>ПОТОЛКИ</span><span>ПЛИТКА</span><span>ДВЕРИ</span><span>ФАЛЬШПОЛ</span></div>
+          <div className="service-marquee-line service-marquee-reverse"><span>БЕТОН</span><span>КИРПИЧ</span><span>СТЯЖКА</span><span>ГКЛ</span><span>ДЕРЕВО</span><span>МУСОР</span><span>ПОДГОТОВКА</span></div>
         </section>
 
         <section className="services section-pad" id="services">
@@ -275,6 +285,16 @@ function App() {
           <div className="manifesto-word">СДЕЛАТЬ</div>
         </section>
 
+        <section className="statement-section">
+          <div className="statement-side">ПО-РУССКИ / PRINCIPLE</div>
+          <div className="statement-main">
+            <p className="statement-label">Работаем не вокруг ремонта — работаем вокруг задачи.</p>
+            <h2>Сначала убираем<br /><span>лишнее.</span></h2>
+            <div className="statement-rule" />
+            <p className="statement-copy">Освобождаем пространство, сохраняем то, что нужно сохранить, и передаём объект следующему этапу без лишней суеты.</p>
+          </div>
+        </section>
+
         <section className="process section-pad" id="process">
           <div className="section-heading reveal">
             <div>
@@ -311,6 +331,11 @@ function App() {
           </div>
         </section>
       </main>
+
+      <div className="floating-call" onClick={() => scrollTo("contact")}>
+        <span>+</span>
+        <strong>ОБЪЕКТ</strong>
+      </div>
 
       <footer className="footer">
         <div className="brand"><span>ПО</span><span>РУССКИ</span></div>
