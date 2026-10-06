@@ -1,8 +1,9 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, Suspense, lazy, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, Menu, X } from "lucide-react";
-import Scene3D from "./Scene3D";
 import "./styles.css";
+
+const Scene3D = lazy(() => import("./Scene3D.jsx"));
 
 const services = [
   { slug:"demontazh", number:"01", title:"Демонтаж", short:"Разбираем пространство до основания.", items:["Перегородки","Стяжка","Напольные покрытия","Потолки","Плитка","Двери","Помещения","Конструкции"] },
@@ -93,7 +94,7 @@ function HomePage() {
       </div>
       <div className="hero-stage">
         <div className="stage-label label-a">01 / DEMOLITION</div><div className="stage-label label-b">MATERIAL / CONCRETE</div>
-        <SceneBoundary><SafeScene><Scene3D/></SafeScene></SceneBoundary>
+        <SceneBoundary><Suspense fallback={<div className="scene3d-fallback safe-fallback" aria-hidden="true"><div className="fallback-plane"/><div className="fallback-wall"/><div className="fallback-cut"/></div>}><Scene3D/></Suspense></SceneBoundary>
         <div className="stage-center-label"><span>РАБОТАЕМ</span><strong>СУТЬ</strong><small>пространство<br/>до следующего этапа</small></div>
         <div className="stage-bottom-line"><span>ПО-РУССКИ / 2026</span><span>SCROLL TO ENTER</span></div>
       </div>
