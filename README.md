@@ -28,3 +28,6 @@ Industrial / editorial / architectural. Реальный Three.js hero, инте
 npm install
 npm run dev
 ```
+
+
+Последнее обновление визуального слоя: 2026-10-06.
