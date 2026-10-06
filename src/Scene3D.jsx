@@ -117,7 +117,6 @@ export default function Scene3D() {
     const pointer = new THREE.Vector2();
     const targetRotation = new THREE.Vector2();
     const currentRotation = new THREE.Vector2();
-    const clock = new THREE.Timer ? null : null;
 
     const onPointerMove = (event) => {
       const rect = mount.getBoundingClientRect();
