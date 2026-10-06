@@ -137,6 +137,7 @@ function App() {
   const [activeService, setActiveService] = useState(0);
   const [activeCase, setActiveCase] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const [quoteService, setQuoteService] = useState("Демонтаж");
   const cursor = useRef(null);
 
   useEffect(() => {
@@ -464,13 +465,31 @@ function App() {
               <h2>Есть работа?<br /><span>Показывайте.</span></h2>
             </div>
             <div className="cta-form">
-              <label>Коротко о задаче</label>
-              <textarea placeholder="Что нужно демонтировать / сделать, площадь, район..." />
-              <div className="form-row">
-                <input placeholder="Ваш телефон" />
-                <button className="button button-light">Отправить заявку <ArrowUpRight size={18} /></button>
+              <label>01 / ЧТО НУЖНО СДЕЛАТЬ</label>
+              <div className="quote-chips">
+                {services.map((service) => (
+                  <button
+                    className={quoteService === service.title ? "quote-chip active" : "quote-chip"}
+                    key={service.id}
+                    onClick={() => setQuoteService(service.title)}
+                    type="button"
+                  >
+                    {service.title}
+                  </button>
+                ))}
               </div>
-              <div className="form-note"><Check size={15} /> Ответим после просмотра задачи и материалов.</div>
+              <label className="quote-label">02 / ВВОДНЫЕ</label>
+              <div className="quote-inputs">
+                <input aria-label="Площадь" placeholder="Площадь, м²" inputMode="numeric" />
+                <input aria-label="Район" placeholder="Район / адрес" />
+              </div>
+              <label className="quote-label">03 / ЗАДАЧА</label>
+              <textarea placeholder={`Что требуется по работе «${quoteService}»...`} />
+              <div className="form-row">
+                <input placeholder="Ваш телефон" inputMode="tel" />
+                <button className="button button-light" type="button">Отправить заявку <ArrowUpRight size={18} /></button>
+              </div>
+              <div className="form-note"><Check size={15} /> После заявки можно прислать фото объекта.</div>
             </div>
           </div>
         </section>
