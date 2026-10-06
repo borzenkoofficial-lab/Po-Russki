@@ -138,7 +138,13 @@ function App() {
   const [activeCase, setActiveCase] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [quoteService, setQuoteService] = useState("Демонтаж");
+  const [introReady, setIntroReady] = useState(false);
   const cursor = useRef(null);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIntroReady(true), 900);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const move = (event) => {
@@ -185,7 +191,24 @@ function App() {
   };
 
   return (
-    <div className="site-shell">
+    <div className={introReady ? "site-shell intro-complete" : "site-shell"}>
+      {!introReady && (
+        <div className="site-preloader" aria-hidden="true">
+          <div className="preloader-top">
+            <span>ПО-РУССКИ</span>
+            <span>МОСКВА / МО</span>
+          </div>
+          <div className="preloader-center">
+            <div className="preloader-line" />
+            <strong>01</strong>
+            <span>ЗАГРУЖАЕМ ПРОСТРАНСТВО</span>
+          </div>
+          <div className="preloader-bottom">
+            <span>DEMOLITION / PREPARATION / FINISH / ACCESS FLOOR</span>
+            <span>2026</span>
+          </div>
+        </div>
+      )}
       <div className="cursor-orb" ref={cursor} />
 
       <header className={scrolled ? "topbar topbar-scrolled" : "topbar"}>
@@ -224,10 +247,16 @@ function App() {
               <br />
               <em>ПО-РУССКИ.</em>
             </h1>
+            <div className="hero-service-tags" aria-label="Основные направления">
+              <span>ДЕМОНТАЖ</span>
+              <span>ПОДГОТОВКА</span>
+              <span>ОТДЕЛКА</span>
+              <span>ФАЛЬШПОЛ</span>
+            </div>
             <p className="hero-description">
-              Демонтаж. Подготовка. Отделка. Фальшпол.
+              Разбираем пространство, подготавливаем объект и собираем следующий этап.
               <br />
-              Без лишнего шума — с понятным результатом.
+              Москва и Московская область.
             </p>
             <div className="hero-actions">
               <button className="button button-dark" onClick={() => scrollTo("contact")}>
