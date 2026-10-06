@@ -136,6 +136,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState(0);
   const [activeCase, setActiveCase] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
   const cursor = useRef(null);
 
   useEffect(() => {
@@ -146,6 +147,27 @@ function App() {
     window.addEventListener("pointermove", move);
     return () => window.removeEventListener("pointermove", move);
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 32);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!activeCase) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const handleKey = (event) => {
+      if (event.key === "Escape") setActiveCase(null);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [activeCase]);
 
   useEffect(() => {
     const reveal = new IntersectionObserver(
@@ -165,7 +187,7 @@ function App() {
     <div className="site-shell">
       <div className="cursor-orb" ref={cursor} />
 
-      <header className="topbar">
+      <header className={scrolled ? "topbar topbar-scrolled" : "topbar"}>
         <button className="brand" onClick={() => scrollTo("top")} aria-label="На главную">
           <span>ПО</span>
           <span>РУССКИ</span>
