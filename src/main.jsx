@@ -88,6 +88,9 @@ const cases = [
     duration: "6 дней",
     scope: "Перегородки · пол · потолок · вывоз",
     note: "Освобождение помещения под следующий этап работ.",
+    before: "/cases/case-01-before.webp",
+    after: "/cases/case-01-after.webp",
+    accent: "DEMO / 01",
   },
   {
     id: "02",
@@ -97,6 +100,9 @@ const cases = [
     duration: "4 дня",
     scope: "Разбор · уборка · подготовка",
     note: "Полностью подготовленное пространство без лишних конструкций.",
+    before: "/cases/case-02-before.webp",
+    after: "/cases/case-02-after.webp",
+    accent: "PREP / 02",
   },
   {
     id: "03",
@@ -106,6 +112,9 @@ const cases = [
     duration: "3 дня",
     scope: "Основание · опоры · панели",
     note: "Фальшпол с доступом к инженерному пространству.",
+    before: "/cases/case-03-before.webp",
+    after: "/cases/case-03-after.webp",
+    accent: "FLOOR / 03",
   },
 ];
 
@@ -439,10 +448,22 @@ function App() {
                 onClick={() => setActiveCase(item)}
               >
                 <span className="case-hit">ОТКРЫТЬ КЕЙС <MoveUpRight size={14} /></span>
-                <div className={`work-visual visual-${index === 0 ? "one" : index === 1 ? "two" : "three"}`}>
-                  <div className={index === 0 ? "visual-scan" : index === 1 ? "visual-floor" : "visual-deck"} />
-                  <div className={index === 0 ? "visual-lines" : index === 1 ? "visual-pillar" : "visual-leg"} />
-                  <span>CASE / {item.id}</span>
+                <div className="work-visual case-image-frame">
+                  <img
+                    src={item.after}
+                    alt={`${item.title} — фото результата`}
+                    onError={(event) => {
+                      event.currentTarget.style.display = "none";
+                      event.currentTarget.parentElement.classList.add("image-missing");
+                    }}
+                  />
+                  <div className="case-image-fallback">
+                    <span>{item.accent}</span>
+                    <strong>{item.title}</strong>
+                    <small>ДОБАВЬТЕ РЕАЛЬНОЕ ФОТО ОБЪЕКТА</small>
+                  </div>
+                  <div className="case-image-index">{item.id}</div>
+                  <span>RESULT / {item.type.toUpperCase()}</span>
                 </div>
                 <div className="work-meta">
                   <span>{item.id} / {item.type.toUpperCase()}</span>
@@ -530,12 +551,28 @@ function App() {
             <button className="case-close" onClick={() => setActiveCase(null)} aria-label="Закрыть"><X size={20} /></button>
             <div className="case-modal-visual">
               <div className="modal-before">
+                <img
+                  src={activeCase.before}
+                  alt="Фото объекта до работ"
+                  onError={(event) => {
+                    event.currentTarget.style.display = "none";
+                    event.currentTarget.parentElement.classList.add("image-missing");
+                  }}
+                />
                 <span>ДО</span>
-                <div className="modal-photo-placeholder">ВСТАВИТЬ ФОТО</div>
+                <div className="modal-photo-placeholder">ДОБАВИТЬ ФОТО</div>
               </div>
               <div className="modal-after">
+                <img
+                  src={activeCase.after}
+                  alt="Фото результата после работ"
+                  onError={(event) => {
+                    event.currentTarget.style.display = "none";
+                    event.currentTarget.parentElement.classList.add("image-missing");
+                  }}
+                />
                 <span>ПОСЛЕ</span>
-                <div className="modal-photo-placeholder">ВСТАВИТЬ ФОТО</div>
+                <div className="modal-photo-placeholder">ДОБАВИТЬ ФОТО</div>
               </div>
             </div>
             <div className="case-modal-copy">
