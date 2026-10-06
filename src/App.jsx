@@ -1,7 +1,9 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, Suspense, lazy, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, Menu, X } from "lucide-react";
 import "./styles.css";
+
+const Scene3D = lazy(() => import("./Scene3D.jsx"));
 
 const services = [
   { slug:"demontazh", number:"01", title:"Демонтаж", short:"Разбираем пространство до основания.", items:["Перегородки","Стяжка","Напольные покрытия","Потолки","Плитка","Двери","Помещения","Конструкции"] },
@@ -105,7 +107,14 @@ function HomePage() {
       <div className="hero-stage hero-stage-fallback">
         <div className="stage-label label-a">01 / DEMOLITION</div>
         <div className="stage-label label-b">MATERIAL / CONCRETE</div>
-        <div className="static-architecture"><div className="sa-base"/><div className="sa-wall sa-left"/><div className="sa-wall sa-right"/><div className="sa-floor"/><div className="sa-ring"/></div>
+        <div className="hero-scene-shell">
+          <SceneBoundary>
+            <Suspense fallback={<div className="scene3d-fallback safe-fallback" aria-hidden="true"><div className="fallback-plane"/><div className="fallback-wall"/><div className="fallback-cut"/></div>}>
+              <Scene3D/>
+            </Suspense>
+          </SceneBoundary>
+          <div className="static-architecture" aria-hidden="true"><div className="sa-base"/><div className="sa-wall sa-left"/><div className="sa-wall sa-right"/><div className="sa-floor"/><div className="sa-ring"/></div>
+        </div>
         <div className="stage-center-label"><span>РАБОТАЕМ</span><strong>СУТЬ</strong><small>пространство<br/>до следующего этапа</small></div>
         <div className="stage-bottom-line"><span>ПО-РУССКИ / 2026</span><span>SCROLL TO ENTER</span></div>
       </div>
