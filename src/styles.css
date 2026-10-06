@@ -552,3 +552,14 @@ h2 span { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
 .fallback-plane{position:absolute;width:48%;height:28%;left:25%;bottom:18%;background:linear-gradient(150deg,#5b5953,#222220);border:1px solid rgba(255,255,255,.12);transform:perspective(500px) rotateX(58deg) rotateZ(-16deg);box-shadow:30px 45px 45px rgba(0,0,0,.35)}
 .fallback-wall{position:absolute;width:44%;height:48%;left:27%;top:20%;background:linear-gradient(145deg,#66645e,#282826);border:1px solid rgba(255,255,255,.12);transform:perspective(600px) rotateX(10deg) rotateY(-25deg) rotateZ(-4deg);box-shadow:inset -30px -30px 55px rgba(0,0,0,.28),inset 12px 12px 30px rgba(255,255,255,.06)}
 .fallback-cut{position:absolute;width:20%;height:23%;left:39%;top:34%;background:#191918;border:1px solid rgba(255,255,255,.06)}
+
+
+/* V7 — protected rendering + staggered entrance */
+.hero-copy .eyebrow{animation:heroIn .9s .1s both cubic-bezier(.2,.7,.2,1)}
+.hero-copy h1{animation:heroIn 1.05s .18s both cubic-bezier(.16,.8,.2,1)}
+.hero-copy .hero-description{animation:heroIn .9s .3s both cubic-bezier(.2,.7,.2,1)}
+.hero-copy .hero-actions{animation:heroIn .9s .42s both cubic-bezier(.2,.7,.2,1)}
+.hero-stage{animation:heroStageIn 1.2s .12s both cubic-bezier(.16,.8,.2,1)}
+@keyframes heroIn{from{opacity:0;transform:translateY(24px);filter:blur(5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes heroStageIn{from{opacity:0;transform:translateY(30px) scale(.975);filter:blur(6px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+.safe-fallback{z-index:2!important}
