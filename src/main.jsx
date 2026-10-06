@@ -79,6 +79,36 @@ const steps = [
   ["04", "Делаем", "Выходим на объект и доводим работу до результата."],
 ];
 
+const cases = [
+  {
+    id: "01",
+    type: "Коммерция",
+    title: "Демонтаж помещения",
+    area: "87 м²",
+    duration: "6 дней",
+    scope: "Перегородки · пол · потолок · вывоз",
+    note: "Освобождение помещения под следующий этап работ.",
+  },
+  {
+    id: "02",
+    type: "Офис",
+    title: "Подготовка основания",
+    area: "142 м²",
+    duration: "4 дня",
+    scope: "Разбор · уборка · подготовка",
+    note: "Полностью подготовленное пространство без лишних конструкций.",
+  },
+  {
+    id: "03",
+    type: "Фальшпол",
+    title: "Монтаж рабочей зоны",
+    area: "96 м²",
+    duration: "3 дня",
+    scope: "Основание · опоры · панели",
+    note: "Фальшпол с доступом к инженерному пространству.",
+  },
+];
+
 const catalog = [
   {
     number: "01",
@@ -105,6 +135,7 @@ const catalog = [
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState(0);
+  const [activeCase, setActiveCase] = useState(null);
   const cursor = useRef(null);
 
   useEffect(() => {
@@ -349,32 +380,24 @@ function App() {
           </div>
 
           <div className="work-grid">
-            <article className="work-card work-card-large reveal">
-              <div className="work-visual visual-one">
-                <div className="visual-scan" />
-                <div className="visual-lines" />
-                <div className="visual-frame frame-a" />
-                <div className="visual-frame frame-b" />
-                <span>CASE / 01</span>
-              </div>
-              <div className="work-meta"><span>01 / КОММЕРЦИЯ</span><strong>ДЕМОНТАЖ</strong></div>
-            </article>
-            <article className="work-card reveal">
-              <div className="work-visual visual-two">
-                <div className="visual-floor" />
-                <div className="visual-pillar" />
-                <span>CASE / 02</span>
-              </div>
-              <div className="work-meta"><span>02 / ОФИС</span><strong>ПОДГОТОВКА</strong></div>
-            </article>
-            <article className="work-card reveal">
-              <div className="work-visual visual-three">
-                <div className="visual-deck" />
-                <div className="visual-leg" />
-                <span>CASE / 03</span>
-              </div>
-              <div className="work-meta"><span>03 / ФАЛЬШПОЛ</span><strong>МОНТАЖ</strong></div>
-            </article>
+            {cases.map((item, index) => (
+              <button
+                className={index === 0 ? "work-card work-card-large reveal case-card" : "work-card reveal case-card"}
+                key={item.id}
+                onClick={() => setActiveCase(item)}
+              >
+                <span className="case-hit">ОТКРЫТЬ КЕЙС <MoveUpRight size={14} /></span>
+                <div className={`work-visual visual-${index === 0 ? "one" : index === 1 ? "two" : "three"}`}>
+                  <div className={index === 0 ? "visual-scan" : index === 1 ? "visual-floor" : "visual-deck"} />
+                  <div className={index === 0 ? "visual-lines" : index === 1 ? "visual-pillar" : "visual-leg"} />
+                  <span>CASE / {item.id}</span>
+                </div>
+                <div className="work-meta">
+                  <span>{item.id} / {item.type.toUpperCase()}</span>
+                  <strong>{item.title.toUpperCase()}</strong>
+                </div>
+              </button>
+            ))}
           </div>
         </section>
 
@@ -430,6 +453,37 @@ function App() {
           </div>
         </section>
       </main>
+
+      {activeCase && (
+        <div className="case-modal" role="dialog" aria-modal="true" aria-label={activeCase.title} onClick={() => setActiveCase(null)}>
+          <div className="case-modal-inner" onClick={(event) => event.stopPropagation()}>
+            <button className="case-close" onClick={() => setActiveCase(null)} aria-label="Закрыть"><X size={20} /></button>
+            <div className="case-modal-visual">
+              <div className="modal-before">
+                <span>ДО</span>
+                <div className="modal-photo-placeholder">ВСТАВИТЬ ФОТО</div>
+              </div>
+              <div className="modal-after">
+                <span>ПОСЛЕ</span>
+                <div className="modal-photo-placeholder">ВСТАВИТЬ ФОТО</div>
+              </div>
+            </div>
+            <div className="case-modal-copy">
+              <div className="section-index">{activeCase.id} / {activeCase.type.toUpperCase()}</div>
+              <h2>{activeCase.title}</h2>
+              <p>{activeCase.note}</p>
+              <div className="case-stats">
+                <div><span>Площадь</span><strong>{activeCase.area}</strong></div>
+                <div><span>Срок</span><strong>{activeCase.duration}</strong></div>
+                <div><span>Состав</span><strong>{activeCase.scope}</strong></div>
+              </div>
+              <button className="button button-dark" onClick={() => { setActiveCase(null); scrollTo("contact"); }}>
+                Обсудить похожий объект <ArrowUpRight size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="floating-call" onClick={() => scrollTo("contact")}>
         <span>+</span>
