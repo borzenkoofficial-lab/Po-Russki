@@ -242,7 +242,7 @@ export default function Scene3D() {
     const currentRotation = new THREE.Vector2();
     const targetScroll = { value: 0 };
     const currentScroll = { value: 0 };
-    const hero = mount.closest(".hero");
+    const hero = mount.closest(".hero-page") || mount.closest(".hero");
 
     const onPointerMove = (event) => {
       const rect = mount.getBoundingClientRect();
