@@ -388,3 +388,72 @@ h2 span { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}}
 @media (max-width:900px){.hero-copy:before,.stage-center-label,.stage-ruler,.stage-cross{display:none}.service-orbit{right:16px;top:90px;width:110px;height:110px}.manifesto-word{font-size:14vw}}
 @media (max-width:560px){.hero-copy:before{display:none}.hero-stage{min-height:480px}.stage-bottom-line{left:16px;right:16px;bottom:16px;font-size:7px}.stage-note{right:16px;bottom:60px}.blueprint-ring.ring-two{width:250px;height:250px;left:32%;top:29%}.manifesto{padding:0 5vw}.manifesto-word{padding:20px 0 14px;-webkit-text-stroke-width:1px}}
+
+
+/* V3 — stronger object language, motion and spatial hierarchy */
+.scroll-meter{position:fixed;left:18px;bottom:28px;z-index:18;display:flex;align-items:center;gap:10px;transform:rotate(-90deg) translateX(-100%);transform-origin:left bottom;font:8px "DM Mono",monospace;letter-spacing:.14em;color:#77736c;mix-blend-mode:multiply}
+.scroll-meter span{width:34px;height:1px;background:var(--ink);position:relative;overflow:hidden}
+.scroll-meter span:after{content:"";position:absolute;left:0;top:0;height:100%;width:40%;background:var(--acid);animation:meter 2s ease-in-out infinite}
+@keyframes meter{0%,100%{transform:translateX(-110%)}50%{transform:translateX(170%)}}
+
+.hero-stage{perspective:1100px}
+.hero-stage:hover .ring-one{opacity:.8}
+.stage-grid:after{content:"";position:absolute;inset:-10%;background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.35) 78%);pointer-events:none}
+.concrete-object{will-change:transform}
+.concrete-object .block{backface-visibility:hidden}
+.concrete-object:before{
+  content:"";position:absolute;left:-12%;right:-8%;bottom:-10%;height:16%;background:rgba(0,0,0,.36);
+  filter:blur(18px);transform:skewX(-28deg);z-index:-2;
+}
+.stage-center-label strong{font-size:clamp(44px,5vw,72px)}
+
+.service-marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#111;color:#f3f1ed;overflow:hidden}
+.service-marquee-line{display:flex;width:max-content;white-space:nowrap;animation:serviceMarquee 36s linear infinite;border-bottom:1px solid rgba(255,255,255,.08)}
+.service-marquee-line:last-child{border-bottom:0}
+.service-marquee-line span{font-size:clamp(46px,7vw,110px);line-height:.9;letter-spacing:-.08em;font-weight:800;padding:21px 28px 24px;border-right:1px solid rgba(255,255,255,.08)}
+.service-marquee-line span:nth-child(even){color:transparent;-webkit-text-stroke:1px rgba(243,241,237,.65)}
+.service-marquee-reverse{animation-direction:reverse;animation-duration:42s}
+@keyframes serviceMarquee{to{transform:translateX(-50%)}}
+
+.statement-section{display:grid;grid-template-columns:180px 1fr;gap:8vw;padding:170px 8vw 180px;background:#171716;color:#f3f1ed;position:relative;overflow:hidden}
+.statement-section:before{content:"";position:absolute;width:55vw;height:55vw;right:-25vw;top:-15vw;border:1px solid rgba(255,255,255,.07);border-radius:50%;box-shadow:0 0 0 70px rgba(255,255,255,.012),0 0 0 140px rgba(255,255,255,.008)}
+.statement-side{font:9px "DM Mono",monospace;letter-spacing:.12em;color:#73746e;writing-mode:vertical-rl}
+.statement-main{position:relative;z-index:2;max-width:980px}
+.statement-label{font:10px "DM Mono",monospace;color:#888982;letter-spacing:.11em;text-transform:uppercase;margin:0 0 35px}
+.statement-main h2{font-size:clamp(64px,10vw,150px);margin:0}
+.statement-main h2 span{color:transparent;-webkit-text-stroke:1.5px #f3f1ed}
+.statement-rule{height:1px;background:rgba(243,241,237,.14);margin:52px 0 25px;position:relative}
+.statement-rule:after{content:"";position:absolute;left:0;top:-1px;width:90px;height:3px;background:var(--acid)}
+.statement-copy{max-width:500px;margin:0 0 0 auto;color:#96958d;font-size:14px;line-height:1.7}
+
+.floating-call{position:fixed;right:25px;bottom:25px;z-index:25;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fff;box-shadow:0 16px 35px rgba(17,17,17,.2);cursor:pointer;border:1px solid rgba(255,255,255,.14);transition:transform .35s ease,background .35s ease}
+.floating-call span{position:absolute;top:9px;right:11px;color:var(--acid);font:14px "DM Mono",monospace}
+.floating-call strong{font:8px "DM Mono",monospace;letter-spacing:.1em;font-weight:400}
+.floating-call:hover{transform:scale(1.08) rotate(-6deg);background:#242421}
+
+.work-card-large .work-visual{min-height:560px}
+.work-card:hover .work-visual:after{opacity:.2}
+.work-card:hover .visual-floor{transform:perspective(300px) rotateX(61deg) rotateZ(-3deg) translateY(-8px)}
+.work-card:hover .visual-pillar{transform:skewY(-8deg) translateX(8px)}
+.work-card:hover .visual-deck{transform:perspective(400px) rotateX(61deg) rotateZ(-9deg) translateY(-10px)}
+.work-card:hover .visual-leg{transform:skewY(-12deg) translateY(-7px)}
+
+.hero-actions .text-button svg{transition:transform .35s ease}
+.hero-actions .text-button:hover svg{transform:translateY(5px)}
+.nav button{position:relative}
+.nav button:after{content:"";position:absolute;left:0;right:100%;bottom:-8px;height:1px;background:var(--ink);transition:right .3s ease}
+.nav button:hover:after{right:0}
+
+@media(max-width:900px){
+  .scroll-meter{display:none}
+  .statement-section{grid-template-columns:1fr;padding:105px 5vw 120px}
+  .statement-side{writing-mode:horizontal-tb}
+  .statement-copy{margin:0}
+  .floating-call{width:60px;height:60px;right:16px;bottom:16px}
+  .service-marquee-line span{font-size:12vw;padding:17px 20px}
+}
+@media(max-width:560px){
+  .statement-main h2{font-size:17vw}
+  .statement-copy{font-size:13px}
+  .work-card-large .work-visual{min-height:440px}
+}
