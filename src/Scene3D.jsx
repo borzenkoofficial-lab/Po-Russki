@@ -396,6 +396,8 @@ export default function Scene3D() {
       slab.geometry.dispose();
       ceiling.geometry.dispose();
       edge.geometry.dispose();
+      floorPanelGeometry.dispose();
+      floorLegGeometry.dispose();
       doorFrameLeft.geometry.dispose();
       doorFrameRight.geometry.dispose();
       doorHeader.geometry.dispose();
