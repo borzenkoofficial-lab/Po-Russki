@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 const clamp01 = (value) => Math.min(1, Math.max(0, value));
@@ -245,13 +244,19 @@ export default function Scene3D() {
         camera.position.z += (lerp(8.6, 10.0, scroll) - camera.position.z) * 0.025;
         camera.position.y += (lerp(4.2, 4.7, scroll) - camera.position.y) * 0.025;
 
-        wall.position.x = lerp(0, -2.55, scroll);
-        wall.position.y = lerp(0.45, 0.74, scroll);
+        wallLeft.position.x = lerp(-1.36, -2.55, scroll);
+        wallLeft.position.y = lerp(0.45, 0.85, scroll);
+        wallRight.position.x = lerp(1.36, 2.55, scroll);
+        wallRight.position.y = lerp(0.45, 0.82, scroll);
+        lintel.position.y = lerp(1.86, 2.65, scroll);
+        lintel.position.x = lerp(0, 0.05, scroll);
         side.position.x = lerp(1.74, 3.1, scroll);
         side.position.y = lerp(0.08, 0.55, scroll);
-        cutout.position.x = lerp(-0.22, -1.22, scroll);
+        column.position.x = lerp(-1.75, -2.85, scroll);
+        column.rotation.z = lerp(0, -0.16, scroll);
         slab.position.x = lerp(-1.0, -2.65, scroll);
         slab.position.y = lerp(1.8, 2.55, scroll);
+        slab.rotation.z = lerp(-0.08, -0.24, scroll);
         edge.position.x = lerp(-0.98, -2.62, scroll);
         edge.position.y = lerp(1.95, 2.74, scroll);
 
