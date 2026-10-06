@@ -699,3 +699,78 @@ h2 span { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
 
 .photo-strip{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;margin-top:30px}
 .photo-strip>div{min-height:100px;background:#242422;border:1px solid rgba(255,255,255,.08)}
+
+
+/* V11 — multi-page site system */
+.site-shell{min-height:100vh;background:var(--paper)}
+.site-nav{position:sticky;top:0}
+.site-nav .nav-active{color:var(--ink)}
+.site-footer{margin-top:0}
+.inner-page{min-height:calc(100vh - 76px)}
+.page-hero{padding:150px 4vw 105px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.page-hero:before{content:"";position:absolute;right:-9vw;top:2vw;width:34vw;height:34vw;border:1px solid rgba(17,17,17,.08);border-radius:50%;box-shadow:0 0 0 35px rgba(17,17,17,.018),0 0 0 70px rgba(17,17,17,.01)}
+.page-hero-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:72px}
+.page-code{font:8px "DM Mono",monospace;color:#85817a;letter-spacing:.12em}
+.page-hero h1{position:relative;z-index:1;font:800 clamp(74px,12vw,180px)/.78 "Manrope",sans-serif;letter-spacing:-.1em;margin:0;max-width:1000px}
+.page-hero h1 span{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.page-hero>p{position:relative;z-index:1;margin:38px 0 0 52%;max-width:400px;color:#6e6a63;font-size:14px;line-height:1.65}
+
+.directory-grid{display:grid;gap:0;padding-top:90px}
+.directory-card{display:grid;grid-template-columns:90px 1fr 230px;gap:35px;align-items:start;padding:45px 0;border-top:1px solid var(--line);position:relative}
+.directory-number{font:10px "DM Mono",monospace;color:#85817a}
+.directory-card h2{font-size:clamp(48px,7vw,105px);margin:0;line-height:.82}
+.directory-card>div:nth-child(2)>p{max-width:430px;color:#77736c;font-size:14px;line-height:1.6;margin:26px 0 28px}
+.directory-items{display:grid;grid-template-columns:repeat(2,minmax(150px,1fr));gap:10px 22px}
+.directory-items span{display:flex;gap:8px;align-items:center;font:9px "DM Mono",monospace;color:#77736c;text-transform:uppercase;letter-spacing:.04em}
+.directory-items i{width:5px;height:5px;border:1px solid currentColor;border-radius:50%}
+.directory-link{display:inline-flex;align-items:center;gap:9px;border:0;background:transparent;padding:9px 0;font:9px "DM Mono",monospace;text-transform:uppercase;letter-spacing:.09em;color:var(--ink);justify-self:end}
+.directory-link svg{transition:transform .3s ease}
+.directory-link:hover svg{transform:translate(4px,-4px)}
+
+.service-detail-page{display:grid;grid-template-columns:1.05fr .95fr;gap:8vw;align-items:start}
+.service-detail-visual{min-height:650px;background:#171716;position:sticky;top:105px;overflow:hidden;box-shadow:0 30px 75px rgba(17,17,17,.12)}
+.service-detail-visual:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;transform:perspective(700px) rotateX(65deg) translateY(24%);transform-origin:center bottom}
+.detail-grid{position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(216,255,50,.07),transparent 22%),radial-gradient(circle at 50% 45%,transparent 22%,rgba(0,0,0,.45) 72%)}
+.detail-mark{position:absolute;left:11%;bottom:15%;width:68%;height:54%;border:1px solid rgba(255,255,255,.16);transform:perspective(800px) rotateX(56deg) rotateZ(-14deg);background:linear-gradient(145deg,#65625c,#242422);box-shadow:36px 44px 45px rgba(0,0,0,.38);display:flex;align-items:center;justify-content:center}
+.detail-mark strong{font:800 26vw/.7 "Manrope",sans-serif;color:rgba(216,255,50,.14);letter-spacing:-.12em}
+.detail-mark span{position:absolute;left:18px;top:16px;font:9px "DM Mono",monospace;color:#8a8a82}
+.detail-tech{position:absolute;left:22px;right:22px;bottom:20px;font:8px "DM Mono",monospace;letter-spacing:.11em;color:#6b6c65}
+.service-detail-copy{padding-top:18px}
+.service-detail-copy h2{font-size:clamp(64px,8vw,120px);margin:26px 0 22px}
+.service-long-copy{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin:32px 0}
+.service-long-copy p{max-width:560px;color:#6e6a63;font-size:13px;line-height:1.7;margin:0 0 14px}.service-long-copy p:last-child{margin-bottom:0}
+
+.works-archive{padding-top:80px}
+.archive-case{display:grid;grid-template-columns:1.15fr .85fr;min-height:620px;border-top:1px solid var(--line);padding:28px 0 70px;gap:8vw}
+.archive-case:nth-child(even){grid-template-columns:.85fr 1.15fr}.archive-case:nth-child(even) .archive-visual{order:2}.archive-case:nth-child(even) .archive-copy{order:1}
+.archive-visual{min-height:560px;position:relative;background:#20201e;overflow:hidden;box-shadow:0 28px 65px rgba(17,17,17,.12)}
+.archive-visual:before{content:"";position:absolute;inset:0;background:linear-gradient(145deg,#67645d,#1c1c1b)}
+.archive-visual:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 60% 30%,rgba(216,255,50,.08),transparent 18%),linear-gradient(to bottom,transparent 60%,rgba(0,0,0,.38))}
+.archive-visual span{position:absolute;z-index:2;left:20px;top:20px;font:9px "DM Mono",monospace;color:#aaa9a2;letter-spacing:.11em}.archive-visual strong{position:absolute;z-index:2;right:20px;bottom:18px;font:800 68px/.75 "Manrope",sans-serif;color:#f3f1ed;letter-spacing:-.08em}
+.av2:before{background:radial-gradient(circle at 70% 25%,#76736a,#20201e 58%)}.av3:before{background:linear-gradient(125deg,#282825,#716d64)}
+.archive-copy{align-self:center;max-width:520px}.archive-copy h2{font-size:clamp(54px,6vw,96px);margin:24px 0 28px}.archive-stats{display:flex;gap:45px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin-bottom:24px}.archive-stats div{display:grid;gap:5px}.archive-stats span{font:8px "DM Mono",monospace;color:#87837c;text-transform:uppercase}.archive-stats strong{font-size:17px}.archive-copy>p{font:10px "DM Mono",monospace;color:#77736c;letter-spacing:.06em;text-transform:uppercase;margin-bottom:32px}
+
+.about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:9vw}
+.about-big{font:800 clamp(80px,12vw,175px)/.78 "Manrope",sans-serif;letter-spacing:-.1em}
+.about-big span{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.about-copy .lead{font-size:22px;line-height:1.35;letter-spacing:-.03em;margin:0 0 25px}.about-copy>p:not(.lead){color:#6f6b64;font-size:13px;line-height:1.65}
+.principles{margin-top:55px;border-top:1px solid var(--line)}.principles div{display:grid;grid-template-columns:45px 1fr;gap:15px;padding:17px 0;border-bottom:1px solid var(--line)}.principles span{font:9px "DM Mono",monospace;color:#85817a}.principles strong{font:10px "DM Mono",monospace;letter-spacing:.08em}
+
+.contacts-page{display:grid;grid-template-columns:.9fr 1.1fr;gap:9vw}
+.contact-copy h2{font-size:clamp(64px,8vw,120px);margin:28px 0}.contact-copy .lead{max-width:450px}.project-form{border-top:1px solid var(--line);padding-top:3px}.project-form label{display:block;font:9px "DM Mono",monospace;color:#77736c;letter-spacing:.1em;margin:23px 0 11px}.project-form>input,.project-form>textarea{width:100%;border:0;border-bottom:1px solid rgba(17,17,17,.25);background:transparent;padding:15px 0;outline:none;color:var(--ink);resize:vertical}.project-form>textarea{min-height:150px}.project-form>.button{margin-top:28px}.project-form .quote-chips{border-bottom:0}
+
+@media(max-width:900px){
+  .page-hero{padding:120px 5vw 85px}.page-hero h1{font-size:17vw}.page-hero>p{margin:30px 0 0;max-width:500px}
+  .directory-card{grid-template-columns:45px 1fr;padding:35px 0}.directory-link{grid-column:2;justify-self:start}.directory-items{grid-template-columns:1fr}
+  .service-detail-page{grid-template-columns:1fr;padding-top:70px}.service-detail-visual{position:relative;top:auto;min-height:500px}.service-detail-copy{padding-top:0}
+  .archive-case,.archive-case:nth-child(even){grid-template-columns:1fr;gap:38px}.archive-case:nth-child(even) .archive-visual,.archive-case:nth-child(even) .archive-copy{order:initial}.archive-visual{min-height:430px}
+  .about-grid,.contacts-page{grid-template-columns:1fr}.about-big{font-size:17vw}.contact-copy{margin-bottom:10px}
+}
+@media(max-width:560px){
+  .page-hero-top{margin-bottom:46px}.page-code{display:none}.page-hero h1{font-size:20vw}
+  .directory-card h2{font-size:12vw}.directory-card>div:nth-child(2)>p{font-size:13px}.directory-link{font-size:8px}
+  .service-detail-visual{min-height:400px}.detail-mark{height:48%;bottom:17%}
+  .archive-visual{min-height:340px}.archive-visual strong{font-size:52px}
+  .archive-stats{gap:26px}
+  .about-big{font-size:19vw}.about-copy .lead{font-size:19px}
+}
