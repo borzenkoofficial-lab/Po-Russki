@@ -187,6 +187,40 @@ function App() {
           <div className="service-marquee-line service-marquee-reverse"><span>БЕТОН</span><span>КИРПИЧ</span><span>СТЯЖКА</span><span>ГКЛ</span><span>ДЕРЕВО</span><span>МУСОР</span><span>ПОДГОТОВКА</span></div>
         </section>
 
+        <section className="service-sequence">
+          <div className="sequence-head">
+            <div className="section-index">02A / СЦЕНА</div>
+            <p>Каждая задача начинается с освобождения пространства.</p>
+          </div>
+          <div className="sequence-grid">
+            <div className="sequence-sticky">
+              <div className="sequence-object">
+                <div className="seq-plane seq-plane-back" />
+                <div className="seq-plane seq-plane-floor" />
+                <div className="seq-plane seq-plane-left" />
+                <div className="seq-plane seq-plane-right" />
+                <div className="seq-beam" />
+                <div className="seq-cut" />
+              </div>
+              <div className="sequence-caption"><span>SPATIAL STUDY</span><strong>01—04</strong></div>
+            </div>
+            <div className="sequence-list">
+              <article className="sequence-item">
+                <span>01</span><h3>Разобрать</h3><p>Убираем существующие конструкции, покрытия и всё, что должно уйти.</p>
+              </article>
+              <article className="sequence-item">
+                <span>02</span><h3>Очистить</h3><p>Освобождаем помещение, сортируем, грузим и организуем вывоз.</p>
+              </article>
+              <article className="sequence-item">
+                <span>03</span><h3>Подготовить</h3><p>Приводим основания и пространство в состояние для следующего этапа.</p>
+              </article>
+              <article className="sequence-item">
+                <span>04</span><h3>Собрать</h3><p>Отделка, фальшпол и новые элементы появляются уже на чистом поле.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
         <section className="services section-pad" id="services">
           <div className="section-heading reveal">
             <div>
