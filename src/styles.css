@@ -616,3 +616,13 @@ h2 span { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
 @keyframes casePanelIn{from{transform:translateY(24px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 .case-modal-copy .button{margin-top:4px}
 @media(max-width:900px){.topbar-scrolled{height:62px}.topbar-scrolled .nav{top:62px}}
+
+
+.quote-label{margin-top:30px!important}
+.quote-chips{display:flex;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(17,17,17,.25);padding-bottom:20px}
+.quote-chip{border:1px solid rgba(17,17,17,.25);background:transparent;padding:9px 12px;font:9px "DM Mono",monospace;text-transform:uppercase;letter-spacing:.08em;transition:background .3s ease,color .3s ease,border-color .3s ease,transform .3s ease}
+.quote-chip:hover{transform:translateY(-2px)}
+.quote-chip.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.quote-inputs{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.quote-inputs input{min-width:0}
+@media(max-width:560px){.quote-inputs{grid-template-columns:1fr}.quote-chips{gap:6px}.quote-chip{font-size:8px}}
