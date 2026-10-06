@@ -13,6 +13,7 @@ export default function Scene3D() {
 
     let renderer;
     let failed = false;
+    const targetScale = new THREE.Vector3(1, 1, 1);
 
     try {
       renderer = new THREE.WebGLRenderer({
@@ -286,10 +287,12 @@ export default function Scene3D() {
         group.rotation.z += (0.03 + scroll * 0.08 - group.rotation.z) * 0.02;
         group.position.y += (floatY + scroll * 0.28 - group.position.y) * 0.035;
         group.position.x += (scroll * 0.52 - group.position.x) * 0.025;
-        group.scale.lerp(
-          new THREE.Vector3(lerp(1, 0.92, scroll), lerp(1, 0.92, scroll), lerp(1, 0.92, scroll)),
-          0.035
+        targetScale.set(
+          lerp(1, 0.92, scroll),
+          lerp(1, 0.92, scroll),
+          lerp(1, 0.92, scroll)
         );
+        group.scale.lerp(targetScale, 0.035);
 
         camera.position.z += (lerp(8.6, 10.0, scroll) - camera.position.z) * 0.025;
         camera.position.y += (lerp(4.2, 4.7, scroll) - camera.position.y) * 0.025;
@@ -381,7 +384,6 @@ export default function Scene3D() {
       window.removeEventListener("resize", resize);
       mount.removeEventListener("pointermove", onPointerMove);
       mount.removeEventListener("pointerleave", onPointerLeave);
-      window.removeEventListener("resize", resize);
 
       renderer?.dispose();
       renderer?.domElement.remove();

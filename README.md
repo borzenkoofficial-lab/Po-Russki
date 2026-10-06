@@ -31,3 +31,12 @@ npm run dev
 
 
 Последнее обновление визуального слоя: 2026-10-06.
+
+
+## Production
+
+- Navigation uses real URLs with client-side transitions, so every page also works on direct load.
+- Vercel rewrites SPA routes to `index.html`.
+- Production assets under `/assets/` are configured for immutable caching.
+- The contact form prepares a structured request using the system share sheet on supported devices or clipboard on desktop.
+- Real project photos should replace the current concept case visuals in `public/cases/` before publishing them as completed works.

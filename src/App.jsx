@@ -18,8 +18,6 @@ const cases = [
   { id:"03", type:"Фальшпол", title:"Монтаж рабочей зоны", area:"96 м²", duration:"3 дня", scope:"Основание · опоры · панели" },
 ];
 
-const routeNames = {"/":"Главная","/uslugi":"Услуги","/raboty":"Работы","/o-nas":"О нас","/kontakty":"Контакты"};
-
 function routeTo() {
   const path = window.location.pathname.replace(/\/$/, "") || "/";
   return path;
@@ -30,12 +28,13 @@ function navigate(path) {
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
 
-function LinkButton({ to, children, className="", onClick }) {
-  return <button className={className} type="button" onClick={() => { onClick?.(); navigate(to); }}>{children}</button>;
-}
-
-function SafeScene({ children }) {
-  return children;
+function LinkButton({ to, children, className="", onClick, ...props }) {
+  return <a className={className} href={to} {...props} onClick={(event)=>{
+    onClick?.(event);
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    navigate(to);
+  }}>{children}</a>;
 }
 
 class AppBoundary extends Component {
@@ -167,10 +166,82 @@ function AboutPage() {
   </PageFrame>;
 }
 
+function NotFoundPage({ path }) {
+  return <main className="inner-page not-found-page">
+    <section className="page-hero">
+      <div className="page-hero-top"><span className="section-index">404 / СТРАНИЦА</span><span className="page-code">PO-RUSSKI / 2026</span></div>
+      <h1>Такого<br/><span>адреса нет.</span></h1>
+      <p>Страница «{path}» не найдена. Вернитесь на главную или откройте каталог услуг.</p>
+      <div className="hero-actions"><LinkButton to="/" className="button button-dark">На главную <ArrowUpRight size={18}/></LinkButton><LinkButton to="/uslugi" className="text-button">Услуги <ArrowRight size={16}/></LinkButton></div>
+    </section>
+  </main>;
+}
+
 function ContactsPage() {
   const [kind,setKind]=useState("Демонтаж");
+  const [formState,setFormState]=useState({status:"idle",message:""});
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const area = String(data.get("area") || "").trim();
+    const address = String(data.get("address") || "").trim();
+    const task = String(data.get("task") || "").trim();
+    const phone = String(data.get("phone") || "").trim();
+    const requestText = [
+      "ПО-РУССКИ / НОВАЯ ЗАЯВКА",
+      "",
+      "Направление: " + kind,
+      "Площадь: " + (area || "не указана"),
+      "Район / адрес: " + (address || "не указан"),
+      "Телефон: " + phone,
+      "Задача: " + task,
+      "",
+      "Сформировано: " + new Date().toLocaleString("ru-RU"),
+    ].join("\n");
+
+    setFormState({status:"working",message:"Готовим заявку..."});
+    try {
+      if (navigator.share) {
+        await navigator.share({title:"Заявка — ПО-РУССКИ",text:requestText});
+        setFormState({status:"success",message:"Заявка открыта в системном меню отправки. Выберите удобный канал и отправьте её."});
+        return;
+      }
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(requestText);
+        setFormState({status:"success",message:"Текст заявки скопирован. Отправьте его в удобный канал связи."});
+        return;
+      }
+      const helper=document.createElement("textarea");
+      helper.value=requestText;
+      helper.setAttribute("readonly","");
+      helper.style.position="fixed";
+      helper.style.opacity="0";
+      document.body.appendChild(helper);
+      helper.select();
+      document.execCommand("copy");
+      helper.remove();
+      setFormState({status:"success",message:"Текст заявки скопирован. Отправьте его в удобный канал связи."});
+    } catch (error) {
+      if (error?.name === "AbortError") {
+        setFormState({status:"idle",message:""});
+        return;
+      }
+      setFormState({status:"error",message:"Не удалось подготовить заявку. Попробуйте ещё раз."});
+    }
+  };
+
   return <PageFrame eyebrow="04 / КОНТАКТЫ" title={<>Есть объект?<br/><span>Показывайте.</span></>} text="Опишите задачу. Фото и видео можно прислать после первого контакта.">
-    <section className="contacts-page section-pad"><div className="contact-copy"><span className="section-index">ОТВЕТИМ ПОСЛЕ ПРОСМОТРА ЗАДАЧИ</span><h2>Начнём<br/><span>с объекта.</span></h2><p className="lead">Москва и Московская область. Подберём состав работ под помещение и задачу.</p></div><form className="project-form" onSubmit={(e)=>e.preventDefault()}><label>01 / НАПРАВЛЕНИЕ</label><div className="quote-chips">{services.map(s=><button key={s.slug} type="button" className={kind===s.title?"quote-chip active":"quote-chip"} onClick={()=>setKind(s.title)}>{s.title}</button>)}</div><label className="quote-label">02 / ВВОДНЫЕ</label><div className="quote-inputs"><input placeholder="Площадь, м²"/><input placeholder="Район / адрес"/></div><label className="quote-label">03 / ЗАДАЧА</label><textarea placeholder={"Что требуется по работе «"+kind+"»..."}/><label className="quote-label">04 / ТЕЛЕФОН</label><input placeholder="Ваш телефон" inputMode="tel"/><button className="button button-light" type="submit">Отправить задачу <ArrowUpRight size={18}/></button><div className="form-note"><Check size={15}/> Можно приложить фотографии после связи.</div></form></section>
+    <section className="contacts-page section-pad"><div className="contact-copy"><span className="section-index">ОТВЕТИМ ПОСЛЕ ПРОСМОТРА ЗАДАЧИ</span><h2>Начнём<br/><span>с объекта.</span></h2><p className="lead">Москва и Московская область. Подберём состав работ под помещение и задачу.</p></div>
+    <form className="project-form" onSubmit={handleSubmit}>
+      <label>01 / НАПРАВЛЕНИЕ</label><div className="quote-chips">{services.map(s=><button key={s.slug} type="button" className={kind===s.title?"quote-chip active":"quote-chip"} onClick={()=>setKind(s.title)}>{s.title}</button>)}</div>
+      <label className="quote-label">02 / ВВОДНЫЕ</label><div className="quote-inputs"><input name="area" placeholder="Площадь, м²" inputMode="decimal" required/><input name="address" placeholder="Район / адрес"/></div>
+      <label className="quote-label">03 / ЗАДАЧА</label><textarea name="task" placeholder={"Что требуется по работе «"+kind+"»..."} required/>
+      <label className="quote-label">04 / ТЕЛЕФОН</label><input name="phone" placeholder="Ваш телефон" inputMode="tel" type="tel" autoComplete="tel" required/>
+      <button className="button button-light" type="submit" disabled={formState.status==="working"}>{formState.status==="working"?"Подготавливаем…":"Сформировать заявку"} <ArrowUpRight size={18}/></button>
+      <div className="form-note"><Check size={15}/> На телефоне откроется системное меню отправки. На компьютере текст заявки копируется.</div>
+      {formState.message && <div className={"form-status "+formState.status} role="status" aria-live="polite">{formState.message}</div>}
+    </form></section>
   </PageFrame>;
 }
 
@@ -179,11 +250,7 @@ function App() {
   useEffect(()=>{
     const onPop=()=>setPath(routeTo());
     window.addEventListener("popstate",onPop);
-    const onClick=(event)=>{
-      const target=event.target.closest?.("button[data-route]");
-      if(!target) return;
-    };
-    return ()=>{window.removeEventListener("popstate",onPop); window.removeEventListener("click",onClick);};
+    return ()=>window.removeEventListener("popstate",onPop);
   },[]);
   useEffect(()=>{ window.scrollTo(0,0); },[path]);
 
@@ -199,7 +266,7 @@ function App() {
     page=service?<ServicePage service={service}/>:<ServicesPage/>;
   } else page=<HomePage/>;
 
-  return <div className="site-shell"><Header path={path}/><div key={path} className="page-transition">{page}</div><div className="floating-call" onClick={()=>navigate("/kontakty")}><span>+</span><strong>ОБЪЕКТ</strong></div><Footer/></div>;
+  return <div className="site-shell"><Header path={path}/><div key={path} className="page-transition">{page}</div><LinkButton to="/kontakty" className="floating-call"><span>+</span><strong>ОБЪЕКТ</strong></LinkButton><Footer/></div>;
 }
 
 createRoot(document.getElementById("root")).render(<AppBoundary><App/></AppBoundary>);

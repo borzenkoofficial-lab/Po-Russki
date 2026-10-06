@@ -958,3 +958,42 @@ button{-webkit-tap-highlight-color:transparent}
 .hero-stage-fallback > .stage-label,
 .hero-stage-fallback > .stage-center-label,
 .hero-stage-fallback > .stage-bottom-line{pointer-events:none}
+
+
+/* V15 — production navigation, form feedback and 404 */
+.brand,
+.nav a,
+.top-action,
+.button,
+.text-button,
+.directory-link,
+.floating-call{ text-decoration:none; }
+
+.nav a{
+  border:0;
+  background:transparent;
+  color:#292826;
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.nav a:hover{ opacity:.55; }
+.form-status{
+  margin-top:18px;
+  padding:13px 14px;
+  border:1px solid rgba(17,17,17,.18);
+  font:9px/1.55 "DM Mono",monospace;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+}
+.form-status.success{ background:rgba(216,255,50,.22); }
+.form-status.error{ background:rgba(17,17,17,.06); }
+.project-form .button:disabled{ opacity:.55; cursor:wait; transform:none; }
+.floating-call{ color:#fff; }
+.not-found-page .page-hero{min-height:70vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.not-found-page .hero-actions{margin-top:28px}
+@media(max-width:560px){
+  .not-found-page .page-hero{min-height:76vh}
+  .form-status{font-size:8px}
+}
