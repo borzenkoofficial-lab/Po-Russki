@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#111111" />
     <meta name="description" content="ПО-РУССКИ — демонтаж, подготовка помещений, отделка и фальшпол." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>ПО-РУССКИ — демонтаж и отделка</title>
   </head>
   <body>
@@ -15,6 +16,26 @@
       </div>
     </div>
     <div id="root"></div>
+    <script>
+      window.addEventListener("error", function (event) {
+        var box = document.getElementById("runtime-error");
+        if (!box || !event.error) return;
+        box.style.display = "block";
+        box.querySelector("pre").textContent = event.error.stack || event.error.message || String(event.error);
+      });
+      window.addEventListener("unhandledrejection", function (event) {
+        var box = document.getElementById("runtime-error");
+        if (!box) return;
+        box.style.display = "block";
+        box.querySelector("pre").textContent = event.reason && (event.reason.stack || event.reason.message) || String(event.reason);
+      });
+    </script>
+    <div id="runtime-error" style="display:none;position:fixed;inset:0;z-index:9999;background:#f3f1ed;padding:28px;font-family:ui-monospace,monospace;color:#111">
+      <div style="max-width:900px;border-top:2px solid #111;padding-top:16px">
+        <strong style="font-size:12px;letter-spacing:.1em">PO-RUSSKI / RUNTIME ERROR</strong>
+        <pre style="margin-top:28px;white-space:pre-wrap;overflow:auto;font-size:13px;line-height:1.5"></pre>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
