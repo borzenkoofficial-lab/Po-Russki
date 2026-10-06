@@ -637,7 +637,7 @@ h2 span { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
 .preloader-line{height:1px;background:linear-gradient(90deg,var(--acid),rgba(216,255,50,.15));transform-origin:left;animation:preloaderLine 1.05s .12s cubic-bezier(.2,.7,.2,1) both}
 @keyframes preloaderLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes preloaderExit{to{opacity:0;visibility:hidden;transform:translateY(-8px)}}
-.site-shell:not(.intro-complete) .topbar,.site-shell:not(.intro-complete) main,.site-shell:not(.intro-complete) footer,.site-shell:not(.intro-complete) .floating-call{opacity:0}
+/* legacy intro visibility removed: application renders directly */
 .site-shell.intro-complete .topbar,.site-shell.intro-complete main,.site-shell.intro-complete footer,.site-shell.intro-complete .floating-call{animation:siteReveal .8s .05s both cubic-bezier(.16,.8,.2,1)}
 @keyframes siteReveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
