@@ -129,18 +129,37 @@ function App() {
 
           <div className="hero-stage reveal">
             <div className="stage-grid" />
+            <div className="stage-ruler ruler-top">01—100 / ММ</div>
+            <div className="stage-ruler ruler-side">STRUCTURE / 01</div>
+            <div className="stage-cross cross-one" />
+            <div className="stage-cross cross-two" />
+            <div className="blueprint-ring ring-one" />
+            <div className="blueprint-ring ring-two" />
             <div className="stage-label label-a">01 / DEMOLITION</div>
             <div className="stage-label label-b">MATERIAL / CONCRETE</div>
-            <div className="concrete-object">
+            <div className="concrete-object" aria-hidden="true">
               <div className="block block-a" />
               <div className="block block-b" />
               <div className="block block-c" />
               <div className="cutout" />
+              <div className="edge-light edge-one" />
+              <div className="edge-light edge-two" />
+            </div>
+            <div className="dust dust-one" />
+            <div className="dust dust-two" />
+            <div className="stage-center-label">
+              <span>ПОКАЗЫВАЕМ</span>
+              <strong>СУТЬ</strong>
+              <small>пространство<br />после демонтажа</small>
             </div>
             <div className="stage-note">
-              <span>ОБЪЕКТ</span>
-              <strong>01—04</strong>
-              <small>пространство<br />до следующего этапа</small>
+              <span>НАПРАВЛЕНИЙ</span>
+              <strong>04</strong>
+              <small>демонтаж / подготовка<br />отделка / фальшпол</small>
+            </div>
+            <div className="stage-bottom-line">
+              <span>ПО-РУССКИ / 2026</span>
+              <span>SCROLL TO ENTER</span>
             </div>
           </div>
         </section>
@@ -189,10 +208,15 @@ function App() {
               ))}
             </div>
 
-            <article className="service-detail reveal">
+            <article className={`service-detail reveal service-detail-${activeService + 1}`}>
               <div className="detail-top">
-                <span>0{activeService + 1}</span>
+                <span>0{activeService + 1} / SYSTEM</span>
                 <ArrowUpRight size={22} />
+              </div>
+              <div className="service-orbit" aria-hidden="true">
+                <span className="orbit-core" />
+                <span className="orbit-ring orbit-ring-a" />
+                <span className="orbit-ring orbit-ring-b" />
               </div>
               <div>
                 <p className="eyebrow">{services[activeService].kicker}</p>
@@ -218,20 +242,37 @@ function App() {
           <div className="work-grid">
             <article className="work-card work-card-large reveal">
               <div className="work-visual visual-one">
+                <div className="visual-scan" />
                 <div className="visual-lines" />
-                <span>COMING SOON</span>
+                <div className="visual-frame frame-a" />
+                <div className="visual-frame frame-b" />
+                <span>CASE / 01</span>
               </div>
               <div className="work-meta"><span>01 / КОММЕРЦИЯ</span><strong>ДЕМОНТАЖ</strong></div>
             </article>
             <article className="work-card reveal">
-              <div className="work-visual visual-two"><span>REAL OBJECTS</span></div>
+              <div className="work-visual visual-two">
+                <div className="visual-floor" />
+                <div className="visual-pillar" />
+                <span>CASE / 02</span>
+              </div>
               <div className="work-meta"><span>02 / ОФИС</span><strong>ПОДГОТОВКА</strong></div>
             </article>
             <article className="work-card reveal">
-              <div className="work-visual visual-three"><span>YOUR PROJECT</span></div>
+              <div className="work-visual visual-three">
+                <div className="visual-deck" />
+                <div className="visual-leg" />
+                <span>CASE / 03</span>
+              </div>
               <div className="work-meta"><span>03 / ФАЛЬШПОЛ</span><strong>МОНТАЖ</strong></div>
             </article>
           </div>
+        </section>
+
+        <section className="manifesto">
+          <div className="manifesto-word">РАЗОБРАТЬ</div>
+          <div className="manifesto-word">ПОДГОТОВИТЬ</div>
+          <div className="manifesto-word">СДЕЛАТЬ</div>
         </section>
 
         <section className="process section-pad" id="process">
