@@ -392,7 +392,6 @@ export default function Scene3D() {
       lintel.geometry.dispose();
       side.geometry.dispose();
       column.geometry.dispose();
-      cutout.geometry.dispose();
       slab.geometry.dispose();
       ceiling.geometry.dispose();
       edge.geometry.dispose();
