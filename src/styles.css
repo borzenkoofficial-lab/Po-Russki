@@ -674,3 +674,28 @@ h2 span { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
   .site-shell:not(.intro-complete) .topbar,.site-shell:not(.intro-complete) main,.site-shell:not(.intro-complete) footer,.site-shell:not(.intro-complete) .floating-call{opacity:1}
   .site-shell.intro-complete .topbar,.site-shell.intro-complete main,.site-shell.intro-complete footer,.site-shell.intro-complete .floating-call{animation:none;opacity:1}
 }
+
+
+/* V10 — real project photography system */
+.case-image-frame{background:#20201e!important;position:relative;isolation:isolate}
+.case-image-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:2;filter:grayscale(.22) contrast(1.03) brightness(.84);transition:transform 1s cubic-bezier(.2,.7,.2,1),filter .6s ease}
+.case-image-frame:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(17,17,17,.08),rgba(17,17,17,.54));z-index:3;pointer-events:none}
+.case-image-frame .case-image-fallback{position:absolute;inset:0;display:grid;align-content:center;padding:32px;z-index:1;background:linear-gradient(145deg,#65635d,#1c1c1b)}
+.case-image-fallback span{font:8px "DM Mono",monospace;color:var(--acid);letter-spacing:.12em}
+.case-image-fallback strong{font:800 clamp(34px,4vw,64px)/.88 "Manrope",sans-serif;color:#f3f1ed;letter-spacing:-.07em;max-width:520px}
+.case-image-fallback small{margin-top:18px;font:8px "DM Mono",monospace;color:#888982;letter-spacing:.1em;max-width:220px}
+.case-image-frame.image-missing img{display:none}
+.case-image-frame .case-image-index{position:absolute;z-index:5;right:18px;top:18px;font:800 48px/.75 "Manrope",sans-serif;color:rgba(255,255,255,.82);letter-spacing:-.08em}
+.case-image-frame>span{z-index:6!important;align-self:flex-end}
+.case-card:hover .case-image-frame img{transform:scale(1.045);filter:grayscale(0) contrast(1.05) brightness(.9)}
+.modal-before>img,.modal-after>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;filter:grayscale(.15) contrast(1.02) brightness(.82)}
+.modal-before.image-missing>img,.modal-after.image-missing>img{display:none}
+.modal-before.image-missing:before{background:linear-gradient(140deg,#65635d,#1f1f1d)}
+.modal-after.image-missing:before{background:linear-gradient(140deg,#77736b,#292926)}
+.modal-before,.modal-after{isolation:isolate}
+.modal-before>span,.modal-after>span{z-index:4}
+.modal-photo-placeholder{z-index:3}
+.modal-before:not(.image-missing) .modal-photo-placeholder,.modal-after:not(.image-missing) .modal-photo-placeholder{display:none}
+
+.photo-strip{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;margin-top:30px}
+.photo-strip>div{min-height:100px;background:#242422;border:1px solid rgba(255,255,255,.08)}
