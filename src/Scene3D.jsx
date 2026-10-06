@@ -61,6 +61,17 @@ export default function Scene3D() {
       metalness: 0.02,
     });
     const accent = new THREE.MeshBasicMaterial({ color: 0xd8ff32 });
+    const steel = new THREE.MeshStandardMaterial({
+      color: 0x4a4945,
+      roughness: 0.52,
+      metalness: 0.72,
+    });
+    const floorMaterial = new THREE.MeshStandardMaterial({
+      color: 0x77746b,
+      roughness: 0.72,
+      metalness: 0.18,
+      transparent: true,
+    });
 
     const base = new THREE.Mesh(new THREE.BoxGeometry(4.5, 0.55, 3.1), concrete);
     base.position.set(0, -1.25, 0);
@@ -102,6 +113,45 @@ export default function Scene3D() {
     edge.position.set(-0.98, 1.95, 1.0);
     edge.rotation.z = -0.08;
     group.add(edge);
+
+    const floorPanelGeometry = new THREE.BoxGeometry(1.25, 0.12, 0.92);
+    const floorLegGeometry = new THREE.CylinderGeometry(0.045, 0.045, 0.58, 12);
+    const floorPanels = [];
+    const floorLegs = [];
+
+    for (let row = 0; row < 2; row += 1) {
+      for (let col = 0; col < 3; col += 1) {
+        const x = -1.48 + col * 1.48;
+        const z = -0.48 + row * 0.96;
+
+        const panel = new THREE.Mesh(floorPanelGeometry, floorMaterial);
+        panel.position.set(x, -0.58, z);
+        panel.userData = { x, y: -0.58, z, index: floorPanels.length };
+        group.add(panel);
+        floorPanels.push(panel);
+
+        for (let leg = 0; leg < 4; leg += 1) {
+          const support = new THREE.Mesh(floorLegGeometry, steel);
+          const sx = x + (leg % 2 === 0 ? -0.47 : 0.47);
+          const sz = z + (leg < 2 ? -0.33 : 0.33);
+          support.position.set(sx, -0.87, sz);
+          support.userData = { x: sx, y: -0.87, z: sz, index: floorLegs.length };
+          group.add(support);
+          floorLegs.push(support);
+        }
+      }
+    }
+
+    const exposedRodGeometry = new THREE.CylinderGeometry(0.025, 0.025, 1.2, 10);
+    const exposedRods = [];
+    for (let i = 0; i < 5; i += 1) {
+      const rod = new THREE.Mesh(exposedRodGeometry, steel);
+      rod.position.set(-0.82 + i * 0.32, 0.88 + (i % 2) * 0.08, -1.1);
+      rod.rotation.z = Math.PI * 0.5;
+      rod.userData = { index: i };
+      group.add(rod);
+      exposedRods.push(rod);
+    }
 
     const doorFrameMaterial = new THREE.MeshStandardMaterial({
       color: 0x8b8981,
@@ -260,6 +310,30 @@ export default function Scene3D() {
         edge.position.x = lerp(-0.98, -2.62, scroll);
         edge.position.y = lerp(1.95, 2.74, scroll);
 
+        floorPanels.forEach((panel) => {
+          const { x, y, z, index } = panel.userData;
+          const spread = scroll * (0.18 + (index % 3) * 0.05);
+          panel.position.x = x + (index - 2.5) * spread;
+          panel.position.y = y + scroll * 0.34 + Math.sin(now * 0.001 + index) * 0.012;
+          panel.position.z = z + Math.sin(index * 1.7) * scroll * 0.18;
+          panel.rotation.z = Math.sin(index) * scroll * 0.11;
+        });
+
+        floorLegs.forEach((support) => {
+          const { x, y, z, index } = support.userData;
+          support.position.x = x + Math.sin(index * 0.8) * scroll * 0.42;
+          support.position.y = y - scroll * 0.16;
+          support.position.z = z + Math.cos(index * 0.5) * scroll * 0.12;
+          support.rotation.z = scroll * (index % 2 === 0 ? 0.2 : -0.2);
+        });
+
+        exposedRods.forEach((rod, index) => {
+          rod.position.y = 0.88 + (index % 2) * 0.08 + scroll * 0.28;
+          rod.rotation.y = scroll * (index % 2 === 0 ? 0.18 : -0.18);
+        });
+
+        floorMaterial.opacity = 0.92 - scroll * 0.5;
+
         fragments.forEach((shard, index) => {
           const { angle, radius, baseY, offset } = shard.userData;
           const spread = 1 + scroll * 0.85;
@@ -326,8 +400,11 @@ export default function Scene3D() {
       doorFrameRight.geometry.dispose();
       doorHeader.geometry.dispose();
       pipeGeometry.dispose();
+      exposedRodGeometry.dispose();
       doorFrameMaterial.dispose();
       pipeMaterial.dispose();
+      steel.dispose();
+      floorMaterial.dispose();
       fragmentGeometry.dispose();
       grid.geometry.dispose();
       ring.geometry.dispose();
