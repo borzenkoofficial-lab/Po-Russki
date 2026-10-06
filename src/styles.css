@@ -563,3 +563,47 @@ h2 span { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
 @keyframes heroIn{from{opacity:0;transform:translateY(24px);filter:blur(5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
 @keyframes heroStageIn{from{opacity:0;transform:translateY(30px) scale(.975);filter:blur(6px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
 .safe-fallback{z-index:2!important}
+
+
+/* V8 — case studies / before-after */
+.case-card{display:block;width:100%;border:0;padding:0;text-align:left;color:inherit;background:transparent;position:relative;cursor:pointer}
+.case-card .work-meta{display:flex}
+.case-hit{position:absolute;right:16px;top:16px;z-index:8;display:flex;align-items:center;gap:7px;padding:8px 10px;background:rgba(17,17,17,.55);border:1px solid rgba(255,255,255,.14);font:8px "DM Mono",monospace;color:#fff;letter-spacing:.1em;opacity:0;transform:translateY(-6px);transition:opacity .35s ease,transform .35s ease}
+.case-card:hover .case-hit{opacity:1;transform:translateY(0)}
+.case-card:focus-visible{outline:2px solid var(--acid);outline-offset:6px}
+.work-card .work-visual{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.case-card:hover .work-visual{transform:scale(.985)}
+.case-card .work-visual span{font-size:9px}
+
+.case-modal{position:fixed;inset:0;z-index:80;background:rgba(10,10,9,.72);backdrop-filter:blur(18px);display:grid;place-items:center;padding:30px;animation:modalIn .45s cubic-bezier(.2,.7,.2,1)}
+.case-modal-inner{width:min(1180px,100%);max-height:calc(100vh - 60px);overflow:auto;background:#f3f1ed;color:var(--ink);display:grid;grid-template-columns:1.2fr .8fr;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.38)}
+.case-close{position:absolute;right:15px;top:15px;z-index:10;width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(17,17,17,.18);background:rgba(243,241,237,.86);backdrop-filter:blur(8px);cursor:pointer;transition:transform .25s ease}
+.case-close:hover{transform:rotate(90deg)}
+.case-modal-visual{display:grid;grid-template-columns:1fr 1fr;min-height:640px;background:#181817;gap:1px}
+.modal-before,.modal-after{position:relative;overflow:hidden;background:#252524}
+.modal-before:before,.modal-after:before{content:"";position:absolute;inset:0;background:linear-gradient(140deg,#65635d,#1f1f1d)}
+.modal-after:before{background:linear-gradient(140deg,#77736b,#292926)}
+.modal-before>span,.modal-after>span{position:absolute;z-index:2;left:18px;top:18px;font:9px "DM Mono",monospace;color:rgba(255,255,255,.55);letter-spacing:.12em}
+.modal-photo-placeholder{position:absolute;left:14%;right:14%;top:22%;bottom:22%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);font:8px "DM Mono",monospace;color:rgba(255,255,255,.45);letter-spacing:.14em}
+.modal-after .modal-photo-placeholder{border-color:rgba(216,255,50,.35);box-shadow:inset 0 0 70px rgba(216,255,50,.04)}
+.case-modal-copy{padding:48px 42px 42px;display:flex;flex-direction:column;justify-content:center}
+.case-modal-copy h2{font-size:clamp(48px,5vw,78px);line-height:.86;margin:22px 0 22px}
+.case-modal-copy>p{color:#6c6861;font-size:14px;line-height:1.6;max-width:420px}
+.case-stats{display:grid;gap:18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:30px 0;padding:22px 0}
+.case-stats div{display:grid;grid-template-columns:90px 1fr;gap:18px}
+.case-stats span{font:8px "DM Mono",monospace;color:#87837c;text-transform:uppercase;letter-spacing:.1em}
+.case-stats strong{font-size:14px;letter-spacing:-.02em}
+.case-modal-copy .button{align-self:flex-start}
+@keyframes modalIn{from{opacity:0}to{opacity:1}}
+
+@media(max-width:900px){
+  .case-modal{padding:16px}
+  .case-modal-inner{grid-template-columns:1fr;max-height:calc(100vh - 32px)}
+  .case-modal-visual{min-height:420px}
+  .case-modal-copy{padding:34px 24px 30px}
+}
+@media(max-width:560px){
+  .case-modal-visual{min-height:310px}
+  .case-modal-copy h2{font-size:12vw}
+  .case-stats div{grid-template-columns:75px 1fr}
+}
