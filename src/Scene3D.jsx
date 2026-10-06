@@ -67,18 +67,26 @@ export default function Scene3D() {
     base.position.set(0, -1.25, 0);
     group.add(base);
 
-    const wall = new THREE.Mesh(new THREE.BoxGeometry(4.1, 3.45, 0.48), concrete);
-    wall.position.set(0, 0.45, -0.92);
-    group.add(wall);
+    const wallLeft = new THREE.Mesh(new THREE.BoxGeometry(1.35, 3.45, 0.48), concrete);
+    wallLeft.position.set(-1.36, 0.45, -0.92);
+    group.add(wallLeft);
+
+    const wallRight = new THREE.Mesh(new THREE.BoxGeometry(1.35, 3.45, 0.48), concrete);
+    wallRight.position.set(1.36, 0.45, -0.92);
+    group.add(wallRight);
+
+    const lintel = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.62, 0.48), concrete);
+    lintel.position.set(0, 1.86, -0.92);
+    group.add(lintel);
 
     const side = new THREE.Mesh(new THREE.BoxGeometry(0.62, 2.75, 2.85), darkConcrete);
     side.position.set(1.74, 0.08, 0.25);
     side.rotation.z = -0.035;
     group.add(side);
 
-    const cutout = new THREE.Mesh(new THREE.BoxGeometry(1.65, 1.55, 0.7), darkConcrete);
-    cutout.position.set(-0.22, 0.05, -0.65);
-    group.add(cutout);
+    const column = new THREE.Mesh(new THREE.BoxGeometry(0.42, 2.85, 0.54), darkConcrete);
+    column.position.set(-1.75, 0.05, -0.48);
+    group.add(column);
 
     const slab = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.28, 2.1), darkConcrete);
     slab.position.set(-1.0, 1.8, 0.15);
@@ -86,10 +94,47 @@ export default function Scene3D() {
     slab.rotation.x = -0.05;
     group.add(slab);
 
+    const ceiling = new THREE.Mesh(new THREE.BoxGeometry(4.25, 0.18, 2.7), darkConcrete);
+    ceiling.position.set(0, 2.0, 0.35);
+    ceiling.rotation.z = -0.035;
+    group.add(ceiling);
+
     const edge = new THREE.Mesh(new THREE.BoxGeometry(1.95, 0.035, 0.035), accent);
     edge.position.set(-0.98, 1.95, 1.0);
     edge.rotation.z = -0.08;
     group.add(edge);
+
+    const doorFrameMaterial = new THREE.MeshStandardMaterial({
+      color: 0x8b8981,
+      roughness: 0.82,
+      metalness: 0.12,
+    });
+
+    const doorFrameLeft = new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.72, 0.08), doorFrameMaterial);
+    doorFrameLeft.position.set(-0.72, 0.18, -0.63);
+    group.add(doorFrameLeft);
+
+    const doorFrameRight = doorFrameLeft.clone();
+    doorFrameRight.position.x = 0.72;
+    group.add(doorFrameRight);
+
+    const doorHeader = new THREE.Mesh(new THREE.BoxGeometry(1.52, 0.08, 0.08), doorFrameMaterial);
+    doorHeader.position.set(0, 1.0, -0.63);
+    group.add(doorHeader);
+
+    const pipeMaterial = new THREE.MeshStandardMaterial({
+      color: 0x444440,
+      roughness: 0.68,
+      metalness: 0.28,
+    });
+
+    const pipeGeometry = new THREE.CylinderGeometry(0.035, 0.035, 2.5, 12);
+    for (let i = 0; i < 3; i += 1) {
+      const pipe = new THREE.Mesh(pipeGeometry, pipeMaterial);
+      pipe.rotation.z = Math.PI * 0.5;
+      pipe.position.set(-0.8 + i * 0.42, 1.16 + i * 0.1, 0.62);
+      group.add(pipe);
+    }
 
     const fragmentGeometry = new THREE.BoxGeometry(0.18, 0.18, 0.18);
     const fragments = [];
@@ -263,11 +308,21 @@ export default function Scene3D() {
       renderer?.domElement.remove();
 
       base.geometry.dispose();
-      wall.geometry.dispose();
+      wallLeft.geometry.dispose();
+      wallRight.geometry.dispose();
+      lintel.geometry.dispose();
       side.geometry.dispose();
+      column.geometry.dispose();
       cutout.geometry.dispose();
       slab.geometry.dispose();
+      ceiling.geometry.dispose();
       edge.geometry.dispose();
+      doorFrameLeft.geometry.dispose();
+      doorFrameRight.geometry.dispose();
+      doorHeader.geometry.dispose();
+      pipeGeometry.dispose();
+      doorFrameMaterial.dispose();
+      pipeMaterial.dispose();
       fragmentGeometry.dispose();
       grid.geometry.dispose();
       ring.geometry.dispose();
